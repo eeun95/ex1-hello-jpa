@@ -11,9 +11,16 @@ public class Member {
 
     @Id
     private Long id;
-
     // @Column(name="userName") 컬럼명 다를때
     private String name;
+
+    public Member() {
+
+    }
+    public Member(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public Long getId() {
         return id;

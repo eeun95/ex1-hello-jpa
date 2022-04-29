@@ -26,8 +26,8 @@ public class JpaMain {
 
              */
 
-            Member findMember = em.find(Member.class, 1L);
-            System.out.println(findMember.getId() + " " + findMember.getName());
+            //Member findMember = em.find(Member.class, 1L);
+            //System.out.println(findMember.getId() + " " + findMember.getName());
             //findMember.setName("HelloJPA");
 
             // JPQL 은 테이블을 대상으로 쿼리를 짜지 않음 Entity 객체를 대상으로 가져옴
@@ -39,8 +39,15 @@ public class JpaMain {
             for (Member member : result) {
                 System.out.println(member.getName());
             }
+            Member m = new Member(150L, "A");
+            em.persist(m);
 
+            Member member = em.find(Member.class, 150L);
+            member.setName("ZZZZ");
+
+            System.out.println("===============");
             // java 컬렉션을 다루는 것처럼 설계됐기 때문에 수정 시 따로 persist 안해줘도됨
+            // JPA는 값을 바꾸면 트랜잭션이 커밋 되는 시점에 값을 변경함
 
             /*
             삽입
@@ -53,6 +60,7 @@ public class JpaMain {
 
             tx.commit();
         } catch(Exception e) {
+            e.printStackTrace();
             tx.rollback();
         } finally {
             em.close();

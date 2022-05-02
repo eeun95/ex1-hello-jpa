@@ -18,58 +18,13 @@ public class JpaMain {
         tx.begin();
 
         try {
-            //code (db에 데이터를 저장한다거나 불러온다거나)
 
-            /*Member member = new Member();
+            Member member = new Member();
             member.setId(2L);
-            member.setName("HelloB");
+            member.setUsername("B");
+            member.setRoleType(RoleType.ADMIN);
 
-             */
-            Member member = new Member(1L, "helloA");
             em.persist(member);
-            Member findMember = em.find(Member.class, 1L);
-            System.out.println(findMember.getId() + " " + findMember.getName());
-            findMember.setName("HelloJPA");
-
-
-            /*
-            // JPQL 은 테이블을 대상으로 쿼리를 짜지 않음 Entity 객체를 대상으로 가져옴
-            List<Member> result = em.createQuery("select m from Member as m where m.name='HelloB'", Member.class)
-                    //.setFirstResult(1)    pagenation  1번부터
-                    //.setMaxResults(10)    pagenation  10개가져와
-                    .getResultList();
-
-            */
-
-            // 영속
-            Member m = new Member(150L, "ZZZ");
-            em.persist(m);
-            Member member2 = em.find(Member.class, 150L);
-            member2.setName("AAA");
-
-            System.out.println("===============");
-
-            /* flush test
-            Member m = new Member(150L, "ZZZ");
-            em.persist(m);
-            em.flush();
-            Member member = em.find(Member.class, 150L);
-            member.setName("AAAAA");
-            em.detach(member);
-            */
-
-            // java 컬렉션을 다루는 것처럼 설계됐기 때문에 수정 시 따로 persist 안해줘도됨
-            // JPA는 값을 바꾸면 트랜잭션이 커밋 되는 시점에 값을 변경함
-
-            /*
-            삽입
-            em.persist(member);
-             */
-            /*
-            삭제
-            em.remove(findMember);
-             */
-
             tx.commit();
         } catch(Exception e) {
             e.printStackTrace();

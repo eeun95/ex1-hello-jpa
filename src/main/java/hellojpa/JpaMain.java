@@ -1,5 +1,7 @@
 package hellojpa;
 
+import org.hibernate.SessionFactory;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -16,21 +18,19 @@ public class JpaMain {
 
         try {
 
-            Team team = new Team();
-            team.setName("TeamA");
-            em.persist(team);
+            Movie movie = new Movie();
+            movie.setDirector("A");
+            movie.setActor("B");
+            movie.setName("Dr.Strange");
+            movie.setPrice(10000);
 
-            Member member = new Member();
-            member.setName("member1");
-            member.setTeam(team);
-            em.persist(member);
+            em.persist(movie);
 
-            Team findTeam = em.find(Team.class, team.getId());
-            List<Member> findMember = findTeam.getMembers();
+            em.flush();
+            em.clear();
 
-            for (Member m : findMember) {
-                System.out.println("m:" + m.getName());
-            }
+            Movie findMovie = em.find(Movie.class, movie.getId());
+            System.out.println(findMovie);
 
             tx.commit();
         } catch(Exception e) {

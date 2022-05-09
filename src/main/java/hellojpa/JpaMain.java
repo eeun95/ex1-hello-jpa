@@ -3,6 +3,7 @@ package hellojpa;
 import org.hibernate.SessionFactory;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class JpaMain {
@@ -18,19 +19,15 @@ public class JpaMain {
 
         try {
 
-            Movie movie = new Movie();
-            movie.setDirector("A");
-            movie.setActor("B");
-            movie.setName("Dr.Strange");
-            movie.setPrice(10000);
+            Member member = new Member();
+            member.setCreatedBy("Seo");
+            member.setCreatedDate(LocalDateTime.now());
+            member.setName("user");
 
-            em.persist(movie);
+            em.persist(member);
 
             em.flush();
             em.clear();
-
-            Movie findMovie = em.find(Movie.class, movie.getId());
-            System.out.println(findMovie);
 
             tx.commit();
         } catch(Exception e) {

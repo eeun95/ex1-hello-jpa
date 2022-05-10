@@ -1,5 +1,6 @@
 package hellojpa;
 
+import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 
 import javax.persistence.*;
@@ -18,16 +19,30 @@ public class JpaMain {
         tx.begin();
 
         try {
+//
+//            Member member = em.find(Member.class, 1L);
+//            printMemberAndTeam(member);
+//            printMember(member);
+
+            Team team = new Team();
+            team.setName("A");
+            em.persist(team);
 
             Member member = new Member();
-            member.setCreatedBy("Seo");
-            member.setCreatedDate(LocalDateTime.now());
-            member.setName("user");
-
+            member.setName("HI");
+            member.setTeam(team);
             em.persist(member);
 
             em.flush();
             em.clear();
+
+            Member m = em.find(Member.class, member.getId());
+
+            System.out.println("m = "+m.getTeam().getClass());
+
+            System.out.println("==============");
+            m.getTeam().getName();
+            System.out.println("==============");
 
             tx.commit();
         } catch(Exception e) {
@@ -38,5 +53,18 @@ public class JpaMain {
         }
 
         emf.close();
+    }
+
+    private static void printMember(Member member) {
+        System.out.println("member = " + member.getName());
+    }
+
+    private static void printMemberAndTeam(Member member) {
+        String username = member.getName();
+        System.out.println("username = " + username);
+
+        Team team = member.getTeam();
+        System.out.println("team = " + team.getName());
+
     }
 }

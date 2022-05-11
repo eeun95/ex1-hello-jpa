@@ -19,30 +19,22 @@ public class JpaMain {
         tx.begin();
 
         try {
-//
-//            Member member = em.find(Member.class, 1L);
-//            printMemberAndTeam(member);
-//            printMember(member);
 
-            Team team = new Team();
-            team.setName("A");
-            em.persist(team);
+            Parent parent = new Parent();
 
-            Member member = new Member();
-            member.setName("HI");
-            member.setTeam(team);
-            em.persist(member);
+            Child child1 = new Child();
+            Child child2 = new Child();
+
+            parent.addChild(child1);
+            parent.addChild(child2);
+
+            em.persist(parent);
 
             em.flush();
             em.clear();
 
-            Member m = em.find(Member.class, member.getId());
-
-            System.out.println("m = "+m.getTeam().getClass());
-
-            System.out.println("==============");
-            m.getTeam().getName();
-            System.out.println("==============");
+            Parent findParent = em.find(Parent.class, parent.getId());
+            findParent.getChildList().remove(0);
 
             tx.commit();
         } catch(Exception e) {

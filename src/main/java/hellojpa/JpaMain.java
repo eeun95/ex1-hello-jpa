@@ -20,11 +20,19 @@ public class JpaMain {
 
         try {
 
+            Address address = new Address("city", "street", "10000");
             Member member = new Member();
             member.setName("DD");
-            member.setHomeAddress(new Address("dd", "dd", "dd"));
-
+            member.setHomeAddress(address);
             em.persist(member);
+
+            Address copyAddress = new Address(address.getCity(),address.getStreet(), address.getZipcode());
+
+            Member member2 = new Member();
+            member2.setName("DD2");
+            member2.setHomeAddress(copyAddress);
+            em.persist(member2);
+
             tx.commit();
         } catch(Exception e) {
             e.printStackTrace();

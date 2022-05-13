@@ -20,22 +20,11 @@ public class JpaMain {
 
         try {
 
-            Parent parent = new Parent();
+            Member member = new Member();
+            member.setName("DD");
+            member.setHomeAddress(new Address("dd", "dd", "dd"));
 
-            Child child1 = new Child();
-            Child child2 = new Child();
-
-            parent.addChild(child1);
-            parent.addChild(child2);
-
-            em.persist(parent);
-
-            em.flush();
-            em.clear();
-
-            Parent findParent = em.find(Parent.class, parent.getId());
-            findParent.getChildList().remove(0);
-
+            em.persist(member);
             tx.commit();
         } catch(Exception e) {
             e.printStackTrace();
@@ -47,16 +36,5 @@ public class JpaMain {
         emf.close();
     }
 
-    private static void printMember(Member member) {
-        System.out.println("member = " + member.getName());
-    }
 
-    private static void printMemberAndTeam(Member member) {
-        String username = member.getName();
-        System.out.println("username = " + username);
-
-        Team team = member.getTeam();
-        System.out.println("team = " + team.getName());
-
-    }
 }

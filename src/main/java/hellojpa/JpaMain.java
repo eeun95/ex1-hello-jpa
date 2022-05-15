@@ -26,6 +26,8 @@ public class JpaMain {
             member.setHomeAddress(address);
             em.persist(member);
 
+            member.getHomeAddress().setCity("dd");
+
             Address copyAddress = new Address(address.getCity(),address.getStreet(), address.getZipcode());
 
             Member member2 = new Member();

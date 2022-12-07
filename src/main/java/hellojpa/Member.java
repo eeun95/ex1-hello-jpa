@@ -27,23 +27,12 @@ public class Member{
     @Column(name="USERNAME")
     private String name;
 
-    @Embedded
-    private Period workPeriod;
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    private Team team;
 
-    @Embedded
-    private Address homeAddress;
-
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name="city",
-                    column=@Column(name="WORK_CITY")),
-            @AttributeOverride(name="street",
-                    column=@Column(name="WORK_STREET")),
-            @AttributeOverride(name="zipcode",
-                    column=@Column(name="WORK_ZIPCODE"))
-    })
-    private Address workAddress;
-
+//    @Column(name = "team_id")
+//    private Long teamId;
 
     public Long getId() {
         return id;
@@ -61,20 +50,19 @@ public class Member{
         this.name = name;
     }
 
-
-    public Period getWorkPeriod() {
-        return workPeriod;
+    public Team getTeam() {
+        return team;
     }
 
-    public void setWorkPeriod(Period workPeriod) {
-        this.workPeriod = workPeriod;
+    public void setTeam(Team team) {
+        this.team = team;
     }
-
-    public Address getHomeAddress() {
-        return homeAddress;
-    }
-
-    public void setHomeAddress(Address homeAddress) {
-        this.homeAddress = homeAddress;
-    }
+//
+//    public Long getTeamId() {
+//        return teamId;
+//    }
+//
+//    public void setTeamId(Long teamId) {
+//        this.teamId = teamId;
+//    }
 }

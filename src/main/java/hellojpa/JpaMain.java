@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JpaMain {
@@ -20,20 +21,20 @@ public class JpaMain {
 
         try {
 
-            Address address = new Address("city", "street", "10000");
+            Team team = new Team();
+            team.setName("teamA");
+            em.persist(team);
+
             Member member = new Member();
-            member.setName("DD");
-            member.setHomeAddress(address);
+            member.setName("memberA");
+            member.setTeam(team);
             em.persist(member);
 
-            member.getHomeAddress().setCity("dd");
+            team.getMemberList().add(member);
 
-            Address copyAddress = new Address(address.getCity(),address.getStreet(), address.getZipcode());
+            Member findMember = em.find(Member.class, member.getId());
 
-            Member member2 = new Member();
-            member2.setName("DD2");
-            member2.setHomeAddress(copyAddress);
-            em.persist(member2);
+            System.out.println(findMember.getTeam().getId());
 
             tx.commit();
         } catch(Exception e) {
